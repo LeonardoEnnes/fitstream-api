@@ -14,15 +14,14 @@
     "@babel/node": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^30.4.1",
     "babel-plugin-module-resolver": "^3.1.1",
     "delay": "^5.0.0",
-    "jest": "^24.9.0",
+    "jest": "^30.4.2",
     "lodash": "^4.17.20",
     "moment": "^2.22.2",
     "supertest": "^3.3.0",
-    "test": "^0.6.0",
-    "uuid": "^3.3.2"
+    "uuid": "^14.0.2"
   },
   "jest": {
     "testEnvironment": "node",
