@@ -1,0 +1,52 @@
+{
+  "name": "fitstream-functional-tests",
+  "version": "0.0.1",
+  "description": "FitStream API functional testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest '.*\\.spec\\.js$' --silent --forceExit"
+  },
+  "author": "leonardo ennes",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "delay": "^5.0.0",
+    "jest": "^24.9.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.22.2",
+    "supertest": "^3.3.0",
+    "test": "^0.6.0",
+    "uuid": "^3.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true,
+    "moduleFileExtensions": [
+      "js",
+      "mjs",
+      "cjs",
+      "jsx",
+      "ts",
+      "tsx",
+      "json",
+      "node"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    },
+    "testMatch": [
+      "/**/?(*.)+(spec).js"
+    ],
+    "testURL": "http://localhost:8080/",
+    "rootDir": "."
+  }
+}
