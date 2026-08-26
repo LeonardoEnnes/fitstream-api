@@ -54,7 +54,7 @@ jobs:
       - name: Install Functional Test Dependencies
         run: |
           cd __functionalTest
-          pnpm install --frozen-lockfile
+          pnpm install --unsafe-perm
 
       - name: Start Spring Boot Application in Background
         run: |
