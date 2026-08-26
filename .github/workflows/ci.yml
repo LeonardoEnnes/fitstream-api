@@ -48,9 +48,8 @@ jobs:
           version: latest
           run_install: false
 
-        # Roda o Build e executa os testes nativos do Spring
       - name: Build and Run Spring Unit/Integration Tests
-        run: ./mvnw clean verify --spring.datasource.url=jdbc:postgresql://localhost:5432/fitstream_db --spring.datasource.username=postgres --spring.datasource.password=password
+        run: ./mvnw clean verify -Dspring.datasource.url=jdbc:postgresql://localhost:5432/fitstream_db -Dspring.datasource.username=postgres -Dspring.datasource.password=password
 
       - name: Install Functional Test Dependencies
         run: |
