@@ -60,7 +60,7 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/fitstream_db
           DB_USERNAME: postgres
-          DB_PASSWORD: password
+          DB_PASSWORD: postgres
 
       - name: Install jest functional test dependencies
         run: |
@@ -78,7 +78,7 @@ jobs:
         env:
           DB_URL: jdbc:postgresql://localhost:5432/fitstream_db
           DB_USERNAME: postgres
-          DB_PASSWORD: password
+          DB_PASSWORD: postgres
 
       - name: Run functional Tests
         run: |
