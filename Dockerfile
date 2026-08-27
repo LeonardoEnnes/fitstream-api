@@ -1,17 +1,14 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+FROM maven:3.9.16-eclipse-temurin-21 AS build
 WORKDIR /build
 
-COPY .mvn .mvn
-COPY mvnw pom.xml ./
+COPY pom.xml ./
 
-RUN chmod +x mvnw
-
-# serve para baixar todas as dependencias do projeto e evitar que o maven baixe as dependencias toda vez que for buildar a imagem
-RUN ./mvnw dependency:go-offline -B
+# Baixa as dependências do projeto antecipadamente
+RUN mvn dependency:go-offline -B
 
 COPY src ./src
 
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests --no-transfer-progress
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app

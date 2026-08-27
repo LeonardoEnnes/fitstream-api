@@ -1,0 +1,12 @@
+spring:
+
+  application:
+    name: fitstream
+
+  # config:
+    # import: optional:file:.env[.properties]
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/fitstream_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
