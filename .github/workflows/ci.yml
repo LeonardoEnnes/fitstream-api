@@ -82,5 +82,5 @@ jobs:
 
       - name: Run functional Tests
         run: |
-          cd __functionalTest
+          cd functionalTest
           pnpm test
