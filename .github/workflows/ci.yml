@@ -64,7 +64,7 @@ jobs:
 
       - name: Install jest functional test dependencies
         run: |
-          cd __functionalTest
+          cd functionalTest
           pnpm install --frozen-lockfile
 
       - name: Start Spring Boot application
