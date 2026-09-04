@@ -1,5 +1,6 @@
 package com.dev.fitstream.workouts.application.usecase;
 
+import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class FindWorkoutByIdUseCase {
 
     public Output execute(UUID id) {
         Workout workout = workoutRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("Treino não encontrado com o ID: " + id));
-
+            .orElseThrow(() -> new ResourceNotFoundException("Treino não encontrado com o ID: " + id));
+            
         return new Output(
             workout.getId().toString(),
             workout.getTitle(),
