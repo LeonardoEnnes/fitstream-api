@@ -1,6 +1,6 @@
-package com.dev.fitstream.wokouts.domain.repository;
+package com.dev.fitstream.workouts.domain.repository;
 
-import com.dev.fitstream.wokouts.domain.model.Workout;
+import com.dev.fitstream.workouts.domain.model.Workout;
 import java.util.Optional;
 import java.util.UUID;
 

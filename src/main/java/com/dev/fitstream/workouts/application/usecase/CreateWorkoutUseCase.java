@@ -1,7 +1,7 @@
-package com.dev.fitstream.wokouts.application.usecase;
+package com.dev.fitstream.workouts.application.usecase;
 
-import com.dev.fitstream.wokouts.domain.model.Workout;
-import com.dev.fitstream.wokouts.domain.repository.WorkoutRepository;
+import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
+import com.dev.fitstream.workouts.domain.model.Workout;
 import org.springframework.stereotype.Service;
 
 @Service

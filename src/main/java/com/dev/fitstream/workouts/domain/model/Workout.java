@@ -1,4 +1,4 @@
-package com.dev.fitstream.wokouts.domain.model;
+package com.dev.fitstream.workouts.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

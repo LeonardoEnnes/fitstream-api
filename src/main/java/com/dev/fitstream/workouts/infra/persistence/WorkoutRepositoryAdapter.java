@@ -1,7 +1,7 @@
-package com.dev.fitstream.wokouts.infra.persistence;
+package com.dev.fitstream.workouts.infra.persistence;
 
-import com.dev.fitstream.wokouts.domain.model.Workout;
-import com.dev.fitstream.wokouts.domain.repository.WorkoutRepository;
+import com.dev.fitstream.workouts.domain.model.Workout;
+import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
