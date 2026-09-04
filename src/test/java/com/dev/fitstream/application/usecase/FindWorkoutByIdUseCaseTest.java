@@ -1,6 +1,7 @@
 package com.dev.fitstream.application.usecase;
 
 import com.dev.fitstream.workouts.application.usecase.FindWorkoutByIdUseCase;
+import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,10 +57,10 @@ public class FindWorkoutByIdUseCaseTest {
         when(workoutRepository.findById(workoutId))
             .thenReturn(Optional.empty());
 
-        Exception exception = assertThrows(IllegalArgumentException.class,
-            () -> findWorkoutByIdUseCase.execute(workoutId));
+        assertThrows(ResourceNotFoundException.class, () -> {
+            findWorkoutByIdUseCase.execute(workoutId);
+        });
 
-        assertEquals("Treino não encontrado com o ID: " + workoutId, exception.getMessage());
         verify(workoutRepository, times(1)).findById(workoutId);
     }
 }

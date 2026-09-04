@@ -46,4 +46,9 @@ public class WorkoutRepositoryAdapter implements WorkoutRepository {
             entity.getCreatedAt()
         ));
     }
+
+    @Override
+    public void delete(UUID id) {
+        springDataRepository.deleteById(id);
+    }
 }

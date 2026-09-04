@@ -27,6 +27,10 @@ public class Workout {
         this.description = description;
     }
 
+    public void complete() {
+        this.completed = true;
+    }
+
     public void markAsCompleted() {
         this.completed = true;
     }

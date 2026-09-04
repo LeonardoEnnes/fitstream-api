@@ -7,4 +7,5 @@ import java.util.UUID;
 public interface WorkoutRepository {
     Workout save(Workout workout);
     Optional<Workout> findById(UUID id);
+    void delete(UUID id);
 }
