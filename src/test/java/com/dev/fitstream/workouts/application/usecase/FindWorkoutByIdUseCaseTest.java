@@ -1,6 +1,5 @@
-package com.dev.fitstream.application.usecase;
+package com.dev.fitstream.workouts.application.usecase;
 
-import com.dev.fitstream.workouts.application.usecase.FindWorkoutByIdUseCase;
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import com.dev.fitstream.workouts.domain.model.Workout;

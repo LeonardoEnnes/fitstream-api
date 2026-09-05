@@ -3,12 +3,19 @@ package com.dev.fitstream.workouts.infra.persistence;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
 @Table(name = "workouts")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class WorkoutEntity {
 
     @Id
@@ -22,21 +29,4 @@ public class WorkoutEntity {
     private boolean completed;
 
     private LocalDateTime createdAt;
-
-    // serve para o JPA criar a entidade
-    protected WorkoutEntity() {}
-
-    public WorkoutEntity(UUID id, String title, String description, boolean completed, LocalDateTime createdAt) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.completed = completed;
-        this.createdAt = createdAt != null ? createdAt : LocalDateTime.now();
-    }
-
-    public UUID getId() { return id; }
-    public String getTitle() { return title; }
-    public String getDescription() { return description; }
-    public boolean isCompleted() { return completed; }
-    public LocalDateTime getCreatedAt() { return createdAt; }
 }

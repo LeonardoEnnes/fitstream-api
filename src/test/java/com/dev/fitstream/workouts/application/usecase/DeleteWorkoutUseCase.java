@@ -1,7 +1,6 @@
-package com.dev.fitstream.application.usecase;
+package com.dev.fitstream.workouts.application.usecase;
 
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
-import com.dev.fitstream.workouts.application.usecase.DeleteWorkoutUseCase;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import static org.junit.jupiter.api.Assertions.*;
