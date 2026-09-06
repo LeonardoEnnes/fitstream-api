@@ -2,8 +2,8 @@ package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.model.Meal;
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 
 @Service
@@ -15,8 +15,29 @@ public class CreateMealUseCase {
         this.mealRepository = mealRepository;
     }
 
-    public record Input(String name, String description) {}
-    public record Output(String id, String name, String description, String consumedAt) {}
+    @Schema(description = "Dados de entrada para registro de uma refeição")
+    public record Input(
+        @Schema(description = "Nome da refeição", example = "Café da Manhã")
+        String name,
+
+        @Schema(description = "Descrição dos alimentos consumidos", example = "3 ovos mexidos, 2 fatias de pão integral e café com leite")
+        String description
+    ) {}
+
+    @Schema(description = "Refeição registrada com sucesso")
+    public record Output(
+        @Schema(description = "ID único da refeição", example = "550e8400-e29b-41d4-a716-446655440000")
+        String id,
+
+        @Schema(description = "Nome da refeição", example = "Café da Manhã")
+        String name,
+
+        @Schema(description = "Descrição dos alimentos", example = "3 ovos mexidos, 2 fatias de pão integral e café com leite")
+        String description,
+
+        @Schema(description = "Data e hora do registro", example = "2026-09-05T08:30:00")
+        String consumedAt
+    ) {}
 
     public Output execute(Input input) {
         if (input.name() == null || input.name().isBlank()) {

@@ -4,6 +4,7 @@ import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
+
 @Service
 public class CreateWorkoutUseCase {
     private WorkoutRepository workoutRepository;
