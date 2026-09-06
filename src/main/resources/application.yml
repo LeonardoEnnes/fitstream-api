@@ -1,8 +1,40 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: fitstream
 
-datasource:
-  url: ${DB_URL:jdbc:postgresql://localhost:5432/fitstream_db}
-  username: ${DB_USERNAME:postgres}
-  password: ${DB_PASSWORD:postgres}
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/fitstream_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+  output:
+    ansi:
+      enabled: ALWAYS
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+logging:
+  pattern:
+    console: "%clr(%d{HH:mm:ss}){cyan} | %clr(%-5level){highlight} | %clr(${spring.application.name}){magenta} | %clr(%logger{20}){yellow} | %msg%n"
+  level:
+    org.springframework: INFO
+    org.hibernate: ERROR
