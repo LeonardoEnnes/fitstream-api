@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.infra.http;
+package com.dev.fitstream.nutrition.infra.http;
 
 import com.dev.fitstream.nutrition.application.usecase.CreateMealUseCase;
 import com.dev.fitstream.nutrition.domain.model.Meal;

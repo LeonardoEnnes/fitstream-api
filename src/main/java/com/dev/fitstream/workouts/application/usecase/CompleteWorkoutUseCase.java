@@ -3,6 +3,7 @@ package com.dev.fitstream.workouts.application.usecase;
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
 
@@ -14,7 +15,14 @@ public class CompleteWorkoutUseCase {
         this.workoutRepository = workoutRepository;
     }
 
-    public record Output(String id, boolean completed) {}
+    @Schema(description = "Resultado da conclusão do treino")
+    public record Output(
+        @Schema(description = "ID único do treino concluído", example = "550e8400-e29b-41d4-a716-446655440000")
+        String id,
+
+        @Schema(description = "Status final de conclusão sempre verdadeiro", example = "true")
+        boolean completed
+    ) {}
 
     public Output execute(UUID id) {
         Workout workout = workoutRepository.findById(id)

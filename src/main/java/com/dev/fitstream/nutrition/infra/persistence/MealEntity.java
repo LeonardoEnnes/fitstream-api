@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.infra.persistence;
+package com.dev.fitstream.nutrition.infra.persistence;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

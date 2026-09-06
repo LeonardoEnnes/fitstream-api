@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.infra.persistence;
+package com.dev.fitstream.nutrition.infra.persistence;
 
 import com.dev.fitstream.nutrition.domain.model.Meal;
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;

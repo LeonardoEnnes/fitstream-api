@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.domain.model;
+package com.dev.fitstream.nutrition.domain.model;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

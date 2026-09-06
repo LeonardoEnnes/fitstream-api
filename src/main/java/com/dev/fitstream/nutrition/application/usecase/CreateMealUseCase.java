@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.application.usecase;
+package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.model.Meal;
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;
