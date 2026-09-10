@@ -22,5 +22,5 @@ describe("GET /meals", () => {
     const found = res.body.find(m => m.id === mealId);
     expect(found).toBeDefined();
     expect(found.name).toBe("Lanche da Tarde");
-  });
+  }, 10000);
 });

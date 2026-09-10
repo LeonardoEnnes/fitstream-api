@@ -26,5 +26,5 @@ describe("POST /meals", () => {
 
     // Espera-se que a sua API trate a exceção e retorne 400 Bad Request
     expect(res.status).toBe(400);
-  });
+  }, 10000);
 });

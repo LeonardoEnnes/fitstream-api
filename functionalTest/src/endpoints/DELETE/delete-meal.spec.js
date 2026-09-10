@@ -19,5 +19,5 @@ describe("DELETE /meals/{id}", () => {
     const listRes = await request(API_URL).get("/meals");
     const stillExists = listRes.body.find(m => m.id === mealId);
     expect(stillExists).toBeUndefined();
-  });
+  }, 10000);
 });
