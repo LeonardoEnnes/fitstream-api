@@ -1,13 +1,12 @@
-﻿package com.dev.fitstream.nutrition.application.usecase;
+package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.BeforeEach;
+import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.Mockito.*;
 
 class DeleteMealUseCaseTest {
 
@@ -21,7 +20,7 @@ class DeleteMealUseCaseTest {
     }
 
     @Test
-    @DisplayName("Deve deletar a refeição com sucesso pelo ID")
+    @DisplayName("Should delete a meal with success by ID")
     void shouldDeleteMealSuccessfully() {
         UUID mealId = UUID.randomUUID();
         doNothing().when(mealRepositoryMock).delete(mealId);

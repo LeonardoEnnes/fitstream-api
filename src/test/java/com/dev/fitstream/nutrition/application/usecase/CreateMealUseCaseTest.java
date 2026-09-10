@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.nutrition.application.usecase;
+package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;
 import com.dev.fitstream.nutrition.domain.model.Meal;
@@ -21,7 +21,7 @@ class CreateMealUseCaseTest {
     }
 
     @Test
-    @DisplayName("Deve criar uma refeição com sucesso quando os dados forem válidos")
+    @DisplayName("Should create a meal with success when data is validated")
     void shouldCreateMealSuccessfully() {
         var input = new CreateMealUseCase.Input("Almoço", "Frango com batata doce");
 
@@ -39,7 +39,7 @@ class CreateMealUseCaseTest {
     }
 
     @Test
-    @DisplayName("Deve lançar IllegalArgumentException quando o nome da refeição for vazio")
+    @DisplayName("Should throw IllegalArgumentException when meal name is blank")
     void shouldThrowExceptionWhenMealNameIsBlank() {
         var input = new CreateMealUseCase.Input("", "Descrição qualquer");
 

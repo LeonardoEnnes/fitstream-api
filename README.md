@@ -31,12 +31,13 @@ Na raiz do projeto execute:
 ### 2. Verifique se a API está respondendo
 ```bash
     curl http://localhost:8080/
+    ou
+    http://localhost:8080/swagger-ui.html
 ```
 ## Rodar Testes Unitário e Integração
 ```bash
   ./mvnw clean verify
 ```
-talvez outro
 
 ## Testes Funcionais
 Acesse a pasta de testes, instale as dependencia (na primeira vez) e execute:
