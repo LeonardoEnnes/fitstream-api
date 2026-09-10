@@ -1,16 +1,18 @@
 package com.dev.fitstream.nutrition.infra.http;
 
 import com.dev.fitstream.nutrition.application.usecase.CreateMealUseCase;
-import com.dev.fitstream.nutrition.domain.repository.MealRepository;
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.web.bind.annotation.*;
+import com.dev.fitstream.nutrition.application.usecase.FindAllMealsUseCase;
+import com.dev.fitstream.nutrition.application.usecase.DeleteMealUseCase;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.http.ResponseEntity;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
-import java.util.stream.Collectors;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/meals")
@@ -18,11 +20,17 @@ import java.util.UUID;
 public class MealController {
 
     private final CreateMealUseCase createMealUseCase;
-    private final MealRepository mealRepository;
+    private final FindAllMealsUseCase findAllMealsUseCase;
+    private final DeleteMealUseCase deleteMealUseCase;
 
-    public MealController(CreateMealUseCase createMealUseCase, MealRepository mealRepository) {
+    public MealController(
+        CreateMealUseCase createMealUseCase,
+        FindAllMealsUseCase findAllMealsUseCase,
+        DeleteMealUseCase deleteMealUseCase
+    ) {
         this.createMealUseCase = createMealUseCase;
-        this.mealRepository = mealRepository;
+        this.findAllMealsUseCase = findAllMealsUseCase;
+        this.deleteMealUseCase = deleteMealUseCase;
     }
 
     @PostMapping
@@ -35,7 +43,7 @@ public class MealController {
     @GetMapping
     @Operation(summary = "Lista todas as refeições", description = "Retorna o histórico completo de refeições cadastradas no diário.")
     public ResponseEntity<List<MealResponse>> findAllMeals() {
-        List<MealResponse> meals = mealRepository.findAll().stream()
+        List<MealResponse> meals = findAllMealsUseCase.execute().stream()
             .map(m -> new MealResponse(m.getId().toString(), m.getName(), m.getDescription(), m.getConsumedAt().toString()))
             .collect(Collectors.toList());
         return ResponseEntity.ok(meals);
@@ -44,7 +52,7 @@ public class MealController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Remove uma refeição", description = "Deleta uma refeição do diário com base no seu identificador único (UUID).")
     public ResponseEntity<Void> deleteMeal(@PathVariable UUID id) {
-        mealRepository.delete(id);
+        deleteMealUseCase.execute(id);
         return ResponseEntity.noContent().build();
     }
 

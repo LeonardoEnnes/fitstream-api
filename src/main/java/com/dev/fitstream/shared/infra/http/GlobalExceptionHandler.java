@@ -1,4 +1,4 @@
-package com.dev.fitstream.workouts.infra.http;
+package com.dev.fitstream.shared.infra.http;
 
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -21,5 +21,18 @@ public class GlobalExceptionHandler {
         );
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
+    }
+
+    // ADICIONE ESTE BLOCO
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex) {
+        Map<String, Object> body = Map.of(
+            "timestamp", LocalDateTime.now().toString(),
+            "status", HttpStatus.BAD_REQUEST.value(),
+            "error", "Bad Request",
+            "message", ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
     }
 }

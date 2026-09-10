@@ -53,6 +53,5 @@ public class CreateMealUseCase {
             savedMeal.getDescription(),
             savedMeal.getConsumedAt().toString()
         );
-
     }
 }
