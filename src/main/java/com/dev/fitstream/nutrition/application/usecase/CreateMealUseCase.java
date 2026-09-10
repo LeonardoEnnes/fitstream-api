@@ -2,6 +2,7 @@ package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.model.Meal;
 import com.dev.fitstream.nutrition.domain.repository.MealRepository;
+import com.dev.fitstream.shared.application.port.out.EventPublisher;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
@@ -10,9 +11,11 @@ import java.time.LocalDateTime;
 public class CreateMealUseCase {
 
     private final MealRepository mealRepository;
+    private final EventPublisher eventPublisher; // Injeção do publicador
 
-    public CreateMealUseCase(MealRepository mealRepository) {
+    public CreateMealUseCase(MealRepository mealRepository, EventPublisher eventPublisher) {
         this.mealRepository = mealRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Schema(description = "Dados de entrada para registro de uma refeição")
@@ -46,6 +49,8 @@ public class CreateMealUseCase {
 
         Meal meal = new Meal(null, input.name(), input.description(), LocalDateTime.now());
         Meal savedMeal = mealRepository.save(meal);
+
+        eventPublisher.publishLiveFeedEvent("NUTRITION", "Nova refeição registrada: " + savedMeal.getName());
 
         return new Output(
             savedMeal.getId().toString(),
