@@ -3,7 +3,7 @@ import request from "supertest";
 const API_URL = "http://localhost:8080";
 
 describe("POST /workouts", () => {
-  it("deve criar um treino com sucesso e retornar status 201", async () => {
+  it("should create a new workout successfully and return status 201", async () => {
     const response = await request(API_URL)
       .post("/workouts")
       .send({

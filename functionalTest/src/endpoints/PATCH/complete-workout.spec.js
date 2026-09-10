@@ -2,7 +2,7 @@ import request from "supertest";
 const API_URL = "http://localhost:8080";
 
 describe("PATCH /workouts/{id}/complete", () => {
-  it("deve marcar o treino como concluído com sucesso", async () => {
+  it("should mark the workout as completed successfully", async () => {
     const createRes = await request(API_URL).post("/workouts").send({
       title: "Treino para Concluir",
       description: "Teste de patch"

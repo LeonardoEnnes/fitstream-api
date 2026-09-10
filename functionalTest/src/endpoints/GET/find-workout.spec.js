@@ -3,7 +3,7 @@ import request from "supertest";
 const API_URL = "http://localhost:8080";
 
 describe("GET /workouts", () => {
-  it("deve buscar um treino existente pelo ID com sucesso", async () => {
+  it("should find an existing workout by ID successfully", async () => {
     const createResponse = await request(API_URL)
       .post("/workouts")
       .send({
@@ -21,7 +21,7 @@ describe("GET /workouts", () => {
     expect(response.body.title).toBe("Treino para Busca");
   });
 
-  it("deve retornar 404 Not Found quando o ID do treino não existir", async () => {
+  it("should return 404 Not Found when the workout ID does not exist", async () => {
     const fakeId = "00000000-0000-0000-0000-000000000000";
     const response = await request(API_URL).get(`/workouts/${fakeId}`);
 
