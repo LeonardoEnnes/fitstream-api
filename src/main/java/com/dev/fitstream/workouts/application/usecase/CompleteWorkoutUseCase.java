@@ -1,8 +1,9 @@
 package com.dev.fitstream.workouts.application.usecase;
 
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
-import com.dev.fitstream.workouts.domain.model.Workout;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
+import com.dev.fitstream.shared.application.port.out.EventPublisher;
+import com.dev.fitstream.workouts.domain.model.Workout;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
 import java.util.UUID;
@@ -10,8 +11,10 @@ import java.util.UUID;
 @Service
 public class CompleteWorkoutUseCase {
     private final WorkoutRepository workoutRepository;
+    private final EventPublisher eventPublisher;
 
-    public CompleteWorkoutUseCase(WorkoutRepository workoutRepository) {
+    public CompleteWorkoutUseCase(EventPublisher eventPublisher, WorkoutRepository workoutRepository) {
+        this.eventPublisher = eventPublisher;
         this.workoutRepository = workoutRepository;
     }
 
@@ -30,6 +33,8 @@ public class CompleteWorkoutUseCase {
 
         workout.complete();
         Workout saved = workoutRepository.save(workout);
+
+        eventPublisher.publishLiveFeedEvent("TREINO", "Exercício concluído: " + saved.getExercise());
 
         return new Output(saved.getId().toString(), saved.isCompleted());
     }

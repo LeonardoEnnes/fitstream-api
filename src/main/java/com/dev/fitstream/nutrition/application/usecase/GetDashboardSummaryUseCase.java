@@ -33,11 +33,11 @@ public class GetDashboardSummaryUseCase {
         List<TimelinePoint> timeline
     ) {}
 
+    @SuppressWarnings("null")
     public Output execute() {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime endOfDay = startOfDay.plusDays(1).minusNanos(1);
 
-        // Busca apenas o que foi consumido HOJE
         List<Meal> todaysMeals = mealRepository.findByConsumedAtBetween(startOfDay, endOfDay);
 
         int totalCalories = todaysMeals.stream().mapToInt(Meal::getCalories).sum();
@@ -45,14 +45,12 @@ public class GetDashboardSummaryUseCase {
         int totalCarbs = todaysMeals.stream().mapToInt(Meal::getCarbs).sum();
         int totalFat = todaysMeals.stream().mapToInt(Meal::getFat).sum();
 
-        // Ordena cronologicamente e mapeia para o formato do Recharts { time: "12:30", calories: 450 }
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
         List<TimelinePoint> timeline = todaysMeals.stream()
             .sorted(Comparator.comparing(Meal::getConsumedAt))
             .map(m -> new TimelinePoint(m.getConsumedAt().format(timeFormatter), m.getCalories()))
             .collect(Collectors.toList());
 
-        // Meta calórica mockada, idealmente viria da tabela UserProfile futuramente
         return new Output(totalCalories, 2500, totalProtein, totalCarbs, totalFat, timeline);
     }
 }

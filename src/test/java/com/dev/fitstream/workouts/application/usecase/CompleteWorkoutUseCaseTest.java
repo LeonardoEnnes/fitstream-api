@@ -2,9 +2,11 @@ package com.dev.fitstream.workouts.application.usecase;
 
 import com.dev.fitstream.workouts.domain.exception.ResourceNotFoundException;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
+import com.dev.fitstream.shared.application.port.out.EventPublisher;
 import com.dev.fitstream.workouts.domain.model.Workout;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.BeforeEach;
 import static org.mockito.Mockito.*;
@@ -16,12 +18,15 @@ import java.util.UUID;
 class CompleteWorkoutUseCaseTest {
 
     private WorkoutRepository workoutRepositoryMock;
+    private EventPublisher eventPublisherMock;
     private CompleteWorkoutUseCase completeWorkoutUseCase;
 
     @BeforeEach
     void setUp() {
         workoutRepositoryMock = mock(WorkoutRepository.class);
-        completeWorkoutUseCase = new CompleteWorkoutUseCase(workoutRepositoryMock);
+        eventPublisherMock = mock(EventPublisher.class);
+        // Ordem exata do construtor: EventPublisher, WorkoutRepository
+        completeWorkoutUseCase = new CompleteWorkoutUseCase(eventPublisherMock, workoutRepositoryMock);
     }
 
     @Test
@@ -41,6 +46,7 @@ class CompleteWorkoutUseCaseTest {
 
         verify(workoutRepositoryMock, times(1)).findById(workoutId);
         verify(workoutRepositoryMock, times(1)).save(any(Workout.class));
+        verify(eventPublisherMock, times(1)).publishLiveFeedEvent(eq("TREINO"), any(String.class));
     }
 
     @Test
@@ -55,5 +61,6 @@ class CompleteWorkoutUseCaseTest {
 
         verify(workoutRepositoryMock, times(1)).findById(workoutId);
         verify(workoutRepositoryMock, never()).save(any(Workout.class));
+        verify(eventPublisherMock, never()).publishLiveFeedEvent(any(), any());
     }
 }

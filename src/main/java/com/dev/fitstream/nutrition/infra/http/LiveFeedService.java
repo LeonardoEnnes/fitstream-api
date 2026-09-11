@@ -1,13 +1,16 @@
 package com.dev.fitstream.nutrition.infra.http;
 
+import com.dev.fitstream.shared.infra.event.LiveFeedEvent;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Service
@@ -27,11 +30,18 @@ public class LiveFeedService {
         return emitter;
     }
 
-    // Recebe o Map enviado pelo Kafka
-    @KafkaListener(topics = "live-feed", groupId = "fitstream-group")
-    public void consumeEvent(Map<String, Object> eventPayload) {
+    // Escuta o evento nativo do Spring de forma síncrona/assíncrona
+    @EventListener
+    public void handleLiveFeedEvent(LiveFeedEvent event) {
         try {
-            String jsonMessage = objectMapper.writeValueAsString(eventPayload);
+            Map<String, Object> payload = Map.of(
+                "id", UUID.randomUUID().toString(),
+                "timestamp", LocalDateTime.now().toString(),
+                "type", event.type(),
+                "message", event.message()
+            );
+
+            String jsonMessage = objectMapper.writeValueAsString(payload);
             System.out.println(">>> EVENTO PROCESSADO E ENVIADO VIA SSE: " + jsonMessage);
 
             for (SseEmitter emitter : emitters) {

@@ -1,6 +1,7 @@
 package com.dev.fitstream.nutrition.application.usecase;
 
 import com.dev.fitstream.nutrition.domain.repository.SupplementRepository;
+import com.dev.fitstream.shared.application.port.out.EventPublisher;
 import com.dev.fitstream.nutrition.domain.model.Supplement;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
 public class CreateSupplementUseCase {
 
     private final SupplementRepository supplementRepository;
+    private final EventPublisher eventPublisher;
 
-    public CreateSupplementUseCase(SupplementRepository supplementRepository) {
+    public CreateSupplementUseCase(SupplementRepository supplementRepository, EventPublisher eventPublisher) {
         this.supplementRepository = supplementRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Schema(name = "CreateSupplementInput", description = "Dados para registro de suplementação")
@@ -56,6 +59,8 @@ public class CreateSupplementUseCase {
 
         Supplement supplement = new Supplement(null, input.name(), input.dosage(), input.unit(), LocalDateTime.now());
         Supplement saved = supplementRepository.save(supplement);
+
+        eventPublisher.publishLiveFeedEvent("SUPLEMENTAÇÃO", "Suplemento consumido: " + saved.getName());
 
         return new Output(
             saved.getId().toString(),
