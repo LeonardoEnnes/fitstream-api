@@ -55,11 +55,11 @@ graph TD
         KF -->|Consumo Assíncrono| BE
     end
 
-    style User fill:#f9f,stroke:#333,stroke-width:2px
-    style FE fill:#bbf,stroke:#333,stroke-width:2px
-    style BE fill:#bfb,stroke:#333,stroke-width:2px
-    style DB fill:#ff9,stroke:#333,stroke-width:2px
-    style KF fill:#fbb,stroke:#333,stroke-width:2px
+    style User fill:#2D3748,stroke:#E2E8F0,stroke-width:2px,color:#FFFFFF
+    style FE fill:#1A365D,stroke:#63B3ED,stroke-width:2px,color:#FFFFFF
+    style BE fill:#22543D,stroke:#68D391,stroke-width:2px,color:#FFFFFF
+    style DB fill:#744210,stroke:#F6E05E,stroke-width:2px,color:#FFFFFF
+    style KF fill:#742A2A,stroke:#FC8181,stroke-width:2px,color:#FFFFFF
 
 ```
 ### 🧠 Decisões Técnicas
