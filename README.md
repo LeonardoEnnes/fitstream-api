@@ -44,8 +44,9 @@ A aplicação utiliza uma arquitetura orientada a eventos para desacoplar o proc
 
 O Kafka atua como camada de mensageria entre os componentes do sistema, permitindo que eventos sejam processados de forma assíncrona e escalável.
 
+```mermaid
 graph TD
-User["👤 Usuário / Cliente"] -->|HTTP / Navegador| FE["⚛️ Front-end\n(React + Vite)\n[Repositório Separado]"]
+    User["👤 Usuário / Cliente"] -->|HTTP / Navegador| FE["⚛️ Front-end\n(React + Vite)\n[Repositório Separado]"]
 
     subgraph "Backend - Spring Boot & Mensageria"
         FE -->|REST API & SSE| BE["☕ Spring Boot API\n(Java 21 / Virtual Threads)"]
@@ -59,6 +60,8 @@ User["👤 Usuário / Cliente"] -->|HTTP / Navegador| FE["⚛️ Front-end\n(Rea
     style BE fill:#bfb,stroke:#333,stroke-width:2px
     style DB fill:#ff9,stroke:#333,stroke-width:2px
     style KF fill:#fbb,stroke:#333,stroke-width:2px
+
+```
 ### 🧠 Decisões Técnicas
 
 **Arquitetura Orientada a Eventos (Kafka):**
