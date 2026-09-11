@@ -6,6 +6,7 @@ import com.dev.fitstream.shared.application.port.out.EventPublisher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -27,7 +28,7 @@ class CreateMealUseCaseTest {
     @Test
     @DisplayName("Deve criar uma refeição com sucesso, salvar e disparar evento")
     void shouldCreateMealSuccessfully() {
-        var input = new CreateMealUseCase.Input("Almoço", "Frango com batata doce");
+        var input = new CreateMealUseCase.Input("Almoço", 500, 40, 60, 15);
         when(mealRepositoryMock.save(any(Meal.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         var output = createMealUseCase.execute(input);
@@ -35,7 +36,8 @@ class CreateMealUseCaseTest {
         assertNotNull(output);
         assertNotNull(output.id());
         assertEquals("Almoço", output.name());
-        assertEquals("Frango com batata doce", output.description());
+        assertEquals(500, output.calories());
+        assertEquals(40, output.protein());
         assertNotNull(output.consumedAt());
 
         verify(mealRepositoryMock, times(1)).save(any(Meal.class));
@@ -45,7 +47,7 @@ class CreateMealUseCaseTest {
     @Test
     @DisplayName("Deve lançar IllegalArgumentException quando o nome da refeição for vazio e não disparar evento")
     void shouldThrowExceptionWhenMealNameIsBlank() {
-        var input = new CreateMealUseCase.Input("", "Descrição qualquer");
+        var input = new CreateMealUseCase.Input("", 500, 40, 60, 15);
 
         assertThrows(IllegalArgumentException.class, () -> {
             createMealUseCase.execute(input);

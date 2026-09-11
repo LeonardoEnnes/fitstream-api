@@ -15,7 +15,13 @@ import java.util.UUID;
 public class MealEntity {
     @Id
     private UUID id;
+
+    @Column(nullable = false)
     private String name;
-    private String description;
+
+    private int calories;
+    private int protein;
+    private int carbs;
+    private int fat;
     private LocalDateTime consumedAt;
 }

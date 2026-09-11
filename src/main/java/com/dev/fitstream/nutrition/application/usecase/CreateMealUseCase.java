@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class CreateMealUseCase {
 
     private final MealRepository mealRepository;
-    private final EventPublisher eventPublisher; // Injeção do publicador
+    private final EventPublisher eventPublisher;
 
     public CreateMealUseCase(MealRepository mealRepository, EventPublisher eventPublisher) {
         this.mealRepository = mealRepository;
@@ -22,23 +22,22 @@ public class CreateMealUseCase {
     public record Input(
         @Schema(description = "Nome da refeição", example = "Café da Manhã")
         String name,
-
-        @Schema(description = "Descrição dos alimentos consumidos", example = "3 ovos mexidos, 2 fatias de pão integral e café com leite")
-        String description
+        int calories,
+        int protein,
+        int carbs,
+        int fat
     ) {}
 
     @Schema(description = "Refeição registrada com sucesso")
     public record Output(
-        @Schema(description = "ID único da refeição", example = "550e8400-e29b-41d4-a716-446655440000")
+        @Schema(description = "ID único", example = "550e8400-e29b-41d4-a716-446655440000")
         String id,
-
-        @Schema(description = "Nome da refeição", example = "Café da Manhã")
         String name,
-
-        @Schema(description = "Descrição dos alimentos", example = "3 ovos mexidos, 2 fatias de pão integral e café com leite")
-        String description,
-
-        @Schema(description = "Data e hora do registro", example = "2026-09-05T08:30:00")
+        int calories,
+        int protein,
+        int carbs,
+        int fat,
+        @Schema(description = "Data do consumo", example = "2026-09-05T08:30:00")
         String consumedAt
     ) {}
 
@@ -47,7 +46,16 @@ public class CreateMealUseCase {
             throw new IllegalArgumentException("O nome da refeição não pode ser vazio.");
         }
 
-        Meal meal = new Meal(null, input.name(), input.description(), LocalDateTime.now());
+        Meal meal = new Meal(
+            null,
+            input.name(),
+            input.calories(),
+            input.protein(),
+            input.carbs(),
+            input.fat(),
+            LocalDateTime.now()
+        );
+
         Meal savedMeal = mealRepository.save(meal);
 
         eventPublisher.publishLiveFeedEvent("NUTRITION", "Nova refeição registrada: " + savedMeal.getName());
@@ -55,7 +63,10 @@ public class CreateMealUseCase {
         return new Output(
             savedMeal.getId().toString(),
             savedMeal.getName(),
-            savedMeal.getDescription(),
+            savedMeal.getCalories(),
+            savedMeal.getProtein(),
+            savedMeal.getCarbs(),
+            savedMeal.getFat(),
             savedMeal.getConsumedAt().toString()
         );
     }

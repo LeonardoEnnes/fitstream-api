@@ -25,8 +25,8 @@ class FindAllMealsUseCaseTest {
     @Test
     @DisplayName("Should return an list of all meals registered")
     void shouldReturnAllMeals() {
-        Meal meal1 = new Meal(null, "Café da Manhã", "Pão e ovo", LocalDateTime.now());
-        Meal meal2 = new Meal(null, "Almoço", "Arroz e feijão", LocalDateTime.now());
+        Meal meal1 = new Meal(null, "Café da Manhã", 300, 20, 30, 10, LocalDateTime.now());
+        Meal meal2 = new Meal(null, "Almoço", 600, 45, 70, 20, LocalDateTime.now());
         when(mealRepositoryMock.findAll()).thenReturn(List.of(meal1, meal2));
 
         List<Meal> result = findAllMealsUseCase.execute();

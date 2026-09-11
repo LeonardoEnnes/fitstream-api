@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/supplements")
-@Tag(name = "Nutrition") // Mantém visualmente no mesmo bloco de Meals no Swagger
+@Tag(name = "Nutrition")
 public class SupplementController {
 
     private final CreateSupplementUseCase createSupplementUseCase;
