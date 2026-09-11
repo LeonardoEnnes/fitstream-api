@@ -6,13 +6,17 @@ jest.setTimeout(10000);
 describe("DELETE /meals/{id}", () => {
   let mealId;
 
-  beforeAll(async () => {
-    const res = await request(API_URL).post("/meals").send({
-      name: "Ceia",
-      description: "Chá de camomila"
+    beforeAll(async () => {
+        const res = await request(API_URL).post("/meals").send({
+            name: "Ceia",
+            description: "Chá de camomila",
+            calories: 50,
+            protein: 1,
+            carbs: 5,
+            fat: 0
+        });
+        mealId = res.body.id;
     });
-    mealId = res.body.id;
-  });
 
   it("Should return 204 when deleting an existing meal", async () => {
     const deleteRes = await request(API_URL).delete(`/meals/${mealId}`);

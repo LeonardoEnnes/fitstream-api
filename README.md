@@ -49,9 +49,9 @@ graph TD
     User["👤 Usuário / Cliente"] -->|HTTP / Navegador| FE["⚛️ Front-end\n(React + Vite)\n[Repositório Separado]"]
 
     subgraph "Backend - Spring Boot & Mensageria"
-        FE -->|REST API & SSE| BE["☕ Spring Boot API\n(Java 21 / Virtual Threads)"]
-        BE -->|Persistência| DB[("(🗄️ PostgreSQL 16\nFlyway Migrations)")]
-        BE -->|Disparo de Eventos| KF["📨 Apache Kafka\n(Event Broker)"]
+        FE -->|REST API & SSE| BE[" Spring Boot API\n(Java 21 / Virtual Threads)"]
+        BE -->|Persistência| DB[("(🗄 PostgreSQL 16\nFlyway Migrations)")]
+        BE -->|Disparo de Eventos| KF[" Apache Kafka\n(Event Broker)"]
         KF -->|Consumo Assíncrono| BE
     end
 

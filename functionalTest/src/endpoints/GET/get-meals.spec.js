@@ -6,13 +6,17 @@ jest.setTimeout(10000);
 describe("GET /meals", () => {
   let mealId;
 
-  beforeAll(async () => {
-    const res = await request(API_URL).post("/meals").send({
-      name: "Lanche da Tarde",
-      description: "Iogurte e castanhas"
+    beforeAll(async () => {
+        const res = await request(API_URL).post("/meals").send({
+            name: "Lanche da Tarde",
+            description: "Iogurte e castanhas",
+            calories: 250,
+            protein: 15,
+            carbs: 20,
+            fat: 12
+        });
+        mealId = res.body.id;
     });
-    mealId = res.body.id;
-  });
 
   it("should list all meals and contain the expected record", async () => {
     const res = await request(API_URL).get("/meals");
