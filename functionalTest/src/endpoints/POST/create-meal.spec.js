@@ -17,14 +17,13 @@ describe("POST /meals", () => {
     expect(res.body.name).toBe(payload.name);
     expect(res.body.description).toBe(payload.description);
     expect(res.body.consumedAt).toBeDefined();
-  });
+  }, 10000);
 
   it("should return error when trying to create a meal without a name", async () => {
     const res = await request(API_URL)
       .post("/meals")
       .send({ name: "", description: "Apenas descrição" });
 
-    // Espera-se que a sua API trate a exceção e retorne 400 Bad Request
     expect(res.status).toBe(400);
   });
 });

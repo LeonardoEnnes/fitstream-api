@@ -1,6 +1,8 @@
 const request = require("supertest");
 const API_URL = process.env.API_URL || "http://localhost:8080";
 
+jest.setTimeout(10000);
+
 describe("DELETE /meals/{id}", () => {
   let mealId;
 

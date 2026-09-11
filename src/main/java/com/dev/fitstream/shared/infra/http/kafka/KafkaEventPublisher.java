@@ -3,10 +3,10 @@ package com.dev.fitstream.shared.infra.http.kafka;
 import com.dev.fitstream.shared.application.port.out.EventPublisher;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-
+import java.util.concurrent.CompletableFuture;
 import java.time.LocalDateTime;
-import java.util.Map;
 import java.util.UUID;
+import java.util.Map;
 
 @Component
 public class KafkaEventPublisher implements EventPublisher {
@@ -20,14 +20,20 @@ public class KafkaEventPublisher implements EventPublisher {
 
     @Override
     public void publishLiveFeedEvent(String type, String message) {
-        // Formato estruturado para facilitar a leitura pelo Front-end
         Map<String, Object> payload = Map.of(
             "id", UUID.randomUUID().toString(),
             "timestamp", LocalDateTime.now().toString(),
-            "type", type, // Ex: "NUTRITION", "WORKOUT"
+            "type", type,
             "message", message
         );
-        System.out.println(">>> ENVIANDO EVENTO PARA O KAFKA: " + message);
-        kafkaTemplate.send(TOPIC, payload);
+
+        // Envio assíncrono em background para nunca bloquear a thread do UseCase/HTTP
+        CompletableFuture.runAsync(() -> {
+            try {
+                kafkaTemplate.send(TOPIC, payload);
+            } catch (Exception e) {
+                System.err.println(">>> Falha ao enviar evento para o Kafka em background: " + e.getMessage());
+            }
+        });
     }
 }
