@@ -15,22 +15,27 @@ public class FindWorkoutByIdUseCase {
         this.workoutRepository = workoutRepository;
     }
 
-    // isso serve para retornar os dados do treino de forma estruturada, sem expor a entidade diretamente
-    @Schema(description = "Detalhes completos do treino encontrado")
+    @Schema(description = "Detalhes completos do exercício encontrado")
     public record Output(
         @Schema(description = "ID único do treino", example = "550e8400-e29b-41d4-a716-446655440000")
         String id,
 
-        @Schema(description = "Título do treino", example = "Treino A - Superiores")
-        String title,
+        @Schema(description = "Nome do exercício", example = "Supino Reto")
+        String exercise,
 
-        @Schema(description = "Descrição detalhada", example = "Supino reto 4x10, Crucifixo 3x12")
-        String description,
+        @Schema(description = "Número de séries", example = "4")
+        int sets,
+
+        @Schema(description = "Número de repetições", example = "10")
+        int reps,
+
+        @Schema(description = "Carga utilizada", example = "80.0")
+        double weight,
 
         @Schema(description = "Indica se o treino foi concluído", example = "true")
         boolean completed,
 
-        @Schema(description = "Data e hora em que o treino foi criado", example = "2026-09-04T15:30:00")
+        @Schema(description = "Data e hora em que foi criado", example = "2026-09-04T15:30:00")
         String createdAt
     ) {}
 
@@ -40,8 +45,10 @@ public class FindWorkoutByIdUseCase {
 
         return new Output(
             workout.getId().toString(),
-            workout.getTitle(),
-            workout.getDescription(),
+            workout.getExercise(),
+            workout.getSets(),
+            workout.getReps(),
+            workout.getWeight(),
             workout.isCompleted(),
             workout.getCreatedAt().toString()
         );

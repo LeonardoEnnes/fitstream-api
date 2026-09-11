@@ -1,11 +1,13 @@
-import request from "supertest";
+const request = require("supertest");
 const API_URL = "http://localhost:8080";
 
 describe("PATCH /workouts/{id}/complete", () => {
   it("should mark the workout as completed successfully", async () => {
     const createRes = await request(API_URL).post("/workouts").send({
-      title: "Treino para Concluir",
-      description: "Teste de patch"
+      exercise: "Agachamento Livre",
+      sets: 4,
+      reps: 8,
+      weight: 100.0
     });
     const id = createRes.body.id;
 

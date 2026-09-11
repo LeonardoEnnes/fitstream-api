@@ -1,11 +1,13 @@
-import request from "supertest";
-const API_URL = "http://localhost:8080";
+const request = require("supertest");
+const API_URL = process.env.API_URL || "http://localhost:8080";
 
 describe("DELETE /workouts/{id}", () => {
   it("should delete an existing workout and return 204", async () => {
     const createRes = await request(API_URL).post("/workouts").send({
-      title: "Treino para Deletar",
-      description: "Teste de delete"
+      exercise: "Elevação Lateral",
+      sets: 3,
+      reps: 15,
+      weight: 10.0
     });
     const id = createRes.body.id;
 

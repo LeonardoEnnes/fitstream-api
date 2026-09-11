@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -14,27 +15,43 @@ import java.util.UUID;
 public class WorkoutController {
 
     private final CreateWorkoutUseCase createWorkoutUseCase;
+    private final ListWorkoutsUseCase listWorkoutsUseCase;
     private final FindWorkoutByIdUseCase findWorkoutByIdUseCase;
     private final UpdateWorkoutUseCase updateWorkoutUseCase;
     private final CompleteWorkoutUseCase completeWorkoutUseCase;
     private final DeleteWorkoutUseCase deleteWorkoutUseCase;
 
     public WorkoutController(
-        CreateWorkoutUseCase createWorkoutUseCase, 
-        CompleteWorkoutUseCase completeWorkoutUseCase, 
-        FindWorkoutByIdUseCase findWorkoutByIdUseCase,   
+        CreateWorkoutUseCase createWorkoutUseCase,
+        ListWorkoutsUseCase listWorkoutsUseCase,
+        FindWorkoutByIdUseCase findWorkoutByIdUseCase,
         UpdateWorkoutUseCase updateWorkoutUseCase,
+        CompleteWorkoutUseCase completeWorkoutUseCase,
         DeleteWorkoutUseCase deleteWorkoutUseCase
     ) {
         this.createWorkoutUseCase = createWorkoutUseCase;
+        this.listWorkoutsUseCase = listWorkoutsUseCase;
         this.findWorkoutByIdUseCase = findWorkoutByIdUseCase;
         this.updateWorkoutUseCase = updateWorkoutUseCase;
         this.completeWorkoutUseCase = completeWorkoutUseCase;
         this.deleteWorkoutUseCase = deleteWorkoutUseCase;
     }
 
+    @GetMapping
+    @Operation(summary = "Lista todos os treinos", description = "Retorna o histórico de exercícios cadastrados.")
+    public ResponseEntity<List<ListWorkoutsUseCase.Output>> listWorkouts() {
+        return ResponseEntity.ok(listWorkoutsUseCase.execute());
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Busca um treino pelo ID", description = "Retorna os detalhes de um exercício específico.")
+    public ResponseEntity<FindWorkoutByIdUseCase.Output> findWorkoutById(@PathVariable UUID id) {
+        FindWorkoutByIdUseCase.Output output = findWorkoutByIdUseCase.execute(id);
+        return ResponseEntity.ok(output);
+    }
+
     @PostMapping
-    @Operation(summary = "Cria um novo treino", description = "Registra um novo treino no sistema. O status inicial será sempre não-concluído.")
+    @Operation(summary = "Cria um novo treino")
     public ResponseEntity<CreateWorkoutUseCase.Output> createWorkout (
         @RequestBody CreateWorkoutUseCase.Input input,
         @RequestHeader(value = "Idempotency-Key", required = false) String idempotencyKey
@@ -43,16 +60,8 @@ public class WorkoutController {
         return ResponseEntity.status(HttpStatus.CREATED).body(output);
     }
 
-    @GetMapping("/{id}")
-    // isso n apareceu
-    @Operation(summary = "Busca um treino pelo ID", description = "Retorna os detalhes de um treino específico baseado no seu identificador único (UUID).")
-    public ResponseEntity<FindWorkoutByIdUseCase.Output> findWorkoutById (@PathVariable UUID id){
-        FindWorkoutByIdUseCase.Output output = findWorkoutByIdUseCase.execute(id);
-        return ResponseEntity.status(HttpStatus.OK).body(output);
-    }
-
     @PutMapping("/{id}")
-    @Operation(summary = "Atualiza um treino existente", description = "Substitui os dados de título e descrição de um treino previamente cadastrado.")
+    @Operation(summary = "Atualiza um treino existente")
     public ResponseEntity<UpdateWorkoutUseCase.Output> updateWorkout (
         @PathVariable UUID id,
         @RequestBody UpdateWorkoutUseCase.Input input
@@ -62,14 +71,14 @@ public class WorkoutController {
     }
 
     @PatchMapping("/{id}/complete")
-    @Operation(summary = "Conclui um treino", description = "Marca o status do treino apontado pelo ID como concluído (completed = true).")
+    @Operation(summary = "Conclui um treino", description = "Marca o status do exercício como concluído.")
     public ResponseEntity<CompleteWorkoutUseCase.Output> completeWorkout(@PathVariable UUID id) {
         var output = completeWorkoutUseCase.execute(id);
         return ResponseEntity.ok(output);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Remove um treino", description = "Deleta fisicamente um treino do banco de dados pelo seu identificador único.")
+    @Operation(summary = "Remove um treino")
     public ResponseEntity<Void> deleteWorkout(@PathVariable UUID id) {
         deleteWorkoutUseCase.execute(id);
         return ResponseEntity.noContent().build();

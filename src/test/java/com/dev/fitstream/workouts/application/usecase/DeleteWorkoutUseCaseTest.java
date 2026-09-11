@@ -27,7 +27,7 @@ class DeleteWorkoutUseCaseTest {
     @DisplayName("Should delete workout successfully")
     void shouldDeleteWorkoutSuccessfully() {
         UUID workoutId = UUID.randomUUID();
-        Workout workout = new Workout(workoutId, "Cardio", "Corrida", false, LocalDateTime.now());
+        Workout workout = new Workout(workoutId, "Rosca Direta", 3, 12, 15.0, false, LocalDateTime.now());
 
         when(workoutRepositoryMock.findById(workoutId)).thenReturn(Optional.of(workout));
         doNothing().when(workoutRepositoryMock).delete(workoutId);

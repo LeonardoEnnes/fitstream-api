@@ -30,7 +30,9 @@ public class FindWorkoutByIdUseCaseTest {
         Workout workout = new Workout(
             workoutId,
             "Crossfit",
-            "Alguma descricao",
+            4,
+            10,
+            50.0,
             false,
             LocalDateTime.now()
         );
@@ -42,8 +44,10 @@ public class FindWorkoutByIdUseCaseTest {
 
         assertNotNull(output);
         assertEquals(workoutId.toString(), output.id());
-        assertEquals("Crossfit", output.title());
-        assertEquals("Alguma descricao", output.description());
+        assertEquals("Crossfit", output.exercise());
+        assertEquals(4, output.sets());
+        assertEquals(10, output.reps());
+        assertEquals(50.0, output.weight());
         assertFalse(output.completed());
 
         verify(workoutRepository, times(1)).findById(workoutId);

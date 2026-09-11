@@ -1,4 +1,4 @@
-﻿package com.dev.fitstream.shared.infra.http;
+package com.dev.fitstream.shared.infra.http;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

@@ -28,7 +28,7 @@ class CompleteWorkoutUseCaseTest {
     @DisplayName("Should set workout as completed with success")
     void shouldCompleteWorkoutSuccessfully() {
         UUID workoutId = UUID.randomUUID();
-        Workout workout = new Workout(workoutId, "Musculação", "Pernas", false, LocalDateTime.now());
+        Workout workout = new Workout(workoutId, "Supino Reto", 4, 10, 80.0, false, LocalDateTime.now());
 
         when(workoutRepositoryMock.findById(workoutId)).thenReturn(Optional.of(workout));
         when(workoutRepositoryMock.save(any(Workout.class))).thenAnswer(invocation -> invocation.getArgument(0));

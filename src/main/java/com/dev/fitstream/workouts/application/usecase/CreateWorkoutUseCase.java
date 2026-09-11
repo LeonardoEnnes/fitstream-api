@@ -7,33 +7,59 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CreateWorkoutUseCase {
-    private WorkoutRepository workoutRepository;
+    private final WorkoutRepository workoutRepository;
 
     public CreateWorkoutUseCase(WorkoutRepository workoutRepository) {
         this.workoutRepository = workoutRepository;
     }
 
-    @Schema(description = "Dados de entrada para criar um novo treino")
+    @Schema(description = "Dados de entrada para criar um novo exercício de musculação")
     public record Input(
-        @Schema(description = "Título do treino", example = "Treino A - Superiores")
-        String title,
+        @Schema(description = "Nome do exercício", example = "Supino Reto")
+        String exercise,
 
-        @Schema(description = "Descrição detalhada dos exercícios", example = "Supino reto 4x10, Crucifixo 3x12")
-        String description
+        @Schema(description = "Número de séries", example = "4")
+        int sets,
+
+        @Schema(description = "Número de repetições", example = "10")
+        int reps,
+
+        @Schema(description = "Carga utilizada em kg", example = "80.0")
+        double weight
     ) {}
-    public record Output(String id, String title, String description, boolean completed) {}
+
+    @Schema(description = "Exercício criado com sucesso")
+    public record Output(
+        @Schema(description = "ID único do treino", example = "550e8400-e29b-41d4-a716-446655440000")
+        String id,
+
+        @Schema(description = "Nome do exercício", example = "Supino Reto")
+        String exercise,
+
+        @Schema(description = "Número de séries", example = "4")
+        int sets,
+
+        @Schema(description = "Número de repetições", example = "10")
+        int reps,
+
+        @Schema(description = "Carga utilizada em kg", example = "80.0")
+        double weight,
+
+        @Schema(description = "Status de conclusão", example = "false")
+        boolean completed
+    ) {}
 
     public Output execute(Input input, String idempotencyKey) {
-        // Idempotência
-
-        Workout workout = new Workout(null, input.title(), input.description(), false, null);
-        Workout savedWorkout = workoutRepository.save(workout);
+        Workout workout = new Workout(null, input.exercise(), input.sets(), input.reps(), input.weight(), false, null);
+        Workout saved = workoutRepository.save(workout);
 
         return new Output(
-            savedWorkout.getId().toString(),
-            savedWorkout.getTitle(),
-            savedWorkout.getDescription(),
-            savedWorkout.isCompleted()
+            saved.getId().toString(),
+            saved.getExercise(),
+            saved.getSets(),
+            saved.getReps(),
+            saved.getWeight(),
+            saved.isCompleted()
         );
     }
 }
