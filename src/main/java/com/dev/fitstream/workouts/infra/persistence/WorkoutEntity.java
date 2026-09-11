@@ -17,16 +17,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WorkoutEntity {
-
     @Id
     private UUID id;
 
     @Column(nullable = false)
-    private String title;
+    private String exercise;
 
-    private String description;
-
+    private int sets;
+    private int reps;
+    private double weight;
     private boolean completed;
-
     private LocalDateTime createdAt;
 }

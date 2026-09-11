@@ -4,8 +4,10 @@ import com.dev.fitstream.workouts.domain.model.Workout;
 import com.dev.fitstream.workouts.domain.repository.WorkoutRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Component
 public class WorkoutRepositoryAdapter implements WorkoutRepository {
@@ -19,36 +21,43 @@ public class WorkoutRepositoryAdapter implements WorkoutRepository {
     public Workout save(Workout workout) {
         WorkoutEntity entity = new WorkoutEntity(
             workout.getId(),
-            workout.getTitle(),
-            workout.getDescription(),
+            workout.getExercise(),
+            workout.getSets(),
+            workout.getReps(),
+            workout.getWeight(),
             workout.isCompleted(),
             workout.getCreatedAt()
         );
-
         WorkoutEntity savedEntity = springDataRepository.save(entity);
-
-        return new Workout(
-            savedEntity.getId(),
-            savedEntity.getTitle(),
-            savedEntity.getDescription(),
-            savedEntity.isCompleted(),
-            savedEntity.getCreatedAt()
-        );
+        return toDomain(savedEntity);
     }
 
     @Override
     public Optional<Workout> findById(UUID id) {
-        return springDataRepository.findById(id).map(entity -> new Workout(
-            entity.getId(),
-            entity.getTitle(),
-            entity.getDescription(),
-            entity.isCompleted(),
-            entity.getCreatedAt()
-        ));
+        return springDataRepository.findById(id).map(this::toDomain);
+    }
+
+    @Override
+    public List<Workout> findAll() {
+        return springDataRepository.findAll().stream()
+            .map(this::toDomain)
+            .collect(Collectors.toList());
     }
 
     @Override
     public void delete(UUID id) {
         springDataRepository.deleteById(id);
+    }
+
+    private Workout toDomain(WorkoutEntity entity) {
+        return new Workout(
+            entity.getId(),
+            entity.getExercise(),
+            entity.getSets(),
+            entity.getReps(),
+            entity.getWeight(),
+            entity.isCompleted(),
+            entity.getCreatedAt()
+        );
     }
 }
