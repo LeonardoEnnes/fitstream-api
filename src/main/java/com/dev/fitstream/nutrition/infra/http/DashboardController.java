@@ -1,7 +1,6 @@
 package com.dev.fitstream.nutrition.infra.http;
 
 import com.dev.fitstream.nutrition.application.usecase.GetDashboardSummaryUseCase;
-import com.dev.fitstream.nutrition.infra.http.LiveFeedService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
