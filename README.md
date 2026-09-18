@@ -1,5 +1,3 @@
-> [!IMPORTANT]
-> 🚀 Projeto Finalizado
 
 [![Java](https://img.shields.io/badge/Java-21-ED8B00.svg?logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
@@ -14,7 +12,7 @@
 [![Supertest](https://img.shields.io/badge/Supertest-Enabled-333333.svg)](https://github.com/ladjs/supertest)
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF.svg?logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
-### 🏋️ FitStream API - Real-Time Fitness & Nutrition
+### FitStream API - Real-Time Fitness & Nutrition
 
 Sistema de monitoramento de rotina de saúde e treinos em tempo real, focado em otimização de tempo e análise de dados.
 
