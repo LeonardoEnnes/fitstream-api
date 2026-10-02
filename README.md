@@ -12,43 +12,66 @@
 [![Supertest](https://img.shields.io/badge/Supertest-Enabled-333333.svg)](https://github.com/ladjs/supertest)
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF.svg?logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
-### FitStream API - Real-Time Fitness & Nutrition
+# FitStream API — Real-Time Fitness & Nutrition
 
-Sistema de monitoramento de rotina de saúde e treinos em tempo real, focado em otimização de tempo e análise de dados.
+Backend do ecossistema FitStream, responsável pelo gerenciamento de treinos,
+nutrição, regras de negócio, persistência de dados e processamento de eventos
+em tempo real.
 
-A API atua como núcleo de processamento do ecossistema FitStream, centralizando regras de negócio, persistência de dados e processamento assíncrono de eventos.
+Desenvolvido com Java 21 e Spring Boot, o projeto utiliza uma arquitetura
+modular, processamento assíncrono com Apache Kafka e Server-Sent Events (SSE)
+para comunicação em tempo real com o frontend.
 
-### 🎯 O Problema resolvido
+> Frontend: [FitStream App](https://github.com/LeonardoEnnes/fitstream-app)
 
-Aplicativos de saúde tradicionais tratam treinos e dietas como silos isolados com alta latência. O FitStream resolve isso centralizando o processamento de forma assíncrona, consolidando macros, calorias e cargas instantaneamente para tomadas de decisão em tempo real.
-### 🛠️ Tecnologias Utilizadas
+## Sobre o Projeto
 
-- **Linguagem:** Java 21
-- **Framework:** Spring Boot
-- **Build:** Maven
-- **Banco de Dados:** PostgreSQL 16
-- **Migrations:** Flyway
-- **Mensageria:** Apache Kafka
-- **Containerização:** Docker
-- **Testes Unitários:** JUnit, Mockito
-- **Testes Funcionais/E2E:** Jest, Supertest
-- **Testes de Integração:** Spring Boot Test
-- **CI/CD:** GitHub Actions
-- **Testes Funcionais:** Node.js, pnpm
+O FitStream é uma aplicação voltada ao acompanhamento de treinos e nutrição,
+permitindo registrar e acompanhar métricas como exercícios, cargas, calorias
+e macronutrientes.
 
-### 🏗️ Arquitetura
+O backend centraliza as regras de negócio e disponibiliza uma API REST,
+além de mecanismos de atualização em tempo real para o frontend.
 
-A aplicação utiliza uma arquitetura orientada a eventos para desacoplar o processamento das ações do usuário da atualização dos dados em tempo real.
+## Principais Funcionalidades
 
-O Kafka atua como camada de mensageria entre os componentes do sistema, permitindo que eventos sejam processados de forma assíncrona e escalável.
+- Gerenciamento de treinos e exercícios
+- Registro e acompanhamento de cargas
+- Controle de calorias e macronutrientes
+- Atualização de dados em tempo real via SSE
+- Processamento assíncrono de eventos com Apache Kafka
+- Persistência em PostgreSQL
+- Versionamento do schema com Flyway
+- Testes unitários, integração e funcionais
+- Pipeline de integração contínua com GitHub Actions
+
+## Tecnologias
+
+| Categoria | Tecnologia |
+|---|---|
+| Linguagem | Java 21 |
+| Framework | Spring Boot |
+| Build | Maven |
+| Banco de dados | PostgreSQL 16 |
+| Migrations | Flyway |
+| Mensageria | Apache Kafka |
+| Comunicação em tempo real | Server-Sent Events (SSE) |
+| Containerização | Docker |
+| Testes unitários | JUnit, Mockito |
+| Testes de integração | Spring Boot Test |
+| Testes funcionais | Jest, Supertest |
+| Testes funcionais | Node.js, pnpm |
+| CI | GitHub Actions |
+
+## Arquitetura
 
 ```mermaid
 graph TD
-    User["👤 Usuário / Cliente"] -->|HTTP / Navegador| FE["⚛️ Front-end\n(React + Vite)\n[Repositório Separado]"]
+    User["Usuário / Cliente"] -->|HTTP / Navegador| FE["Front-end\n(React + Vite)\n[Repositório Separado]"]
 
     subgraph "Backend - Spring Boot & Mensageria"
         FE -->|REST API & SSE| BE[" Spring Boot API\n(Java 21 / Virtual Threads)"]
-        BE -->|Persistência| DB[("(🗄 PostgreSQL 16\nFlyway Migrations)")]
+        BE -->|Persistência| DB[("(PostgreSQL 16\nFlyway Migrations)")]
         BE -->|Disparo de Eventos| KF[" Apache Kafka\n(Event Broker)"]
         KF -->|Consumo Assíncrono| BE
     end
@@ -60,42 +83,10 @@ graph TD
     style KF fill:#742A2A,stroke:#FC8181,stroke-width:2px,color:#FFFFFF
 
 ```
-### 🧠 Decisões Técnicas
 
-**Arquitetura Orientada a Eventos (Kafka):**
+### Como Executar o Projeto Localmente
 
-Escolhido para desacoplar a ingestão de ações do usuário da emissão do Live Feed. Isso evita gargalos no banco de dados e permite que o sistema escale horizontalmente o processamento de métricas em tempo real.
-
-**Migrations com Flyway:**
-
-O banco de dados é tratado como código. O Flyway garante que todos os ambientes (local, CI/CD e produção) possuam esquemas previsíveis, evitando inconsistências no PostgreSQL 16.
-
-**Testes de Caixa Preta com Jest/Supertest:**
-
-Em vez de depender apenas de testes de integração acoplados ao ecossistema Spring, optou-se por executar testes funcionais via Node.js.
-
-Essa abordagem simula o comportamento real de um cliente HTTP consumindo a API de forma agnóstica, validando contratos e comportamentos finais.
-
-**Java 21 + Virtual Threads:**
-
-Utilização de Virtual Threads para suportar um alto throughput de conexões simultâneas exigido pelo Server-Sent Events (SSE), reduzindo o custo de recursos associado ao gerenciamento tradicional de threads.
-
-### 🚀 Como Executar o Projeto Localmente
-
-#### 📋 Pré-requisitos
-
-Antes de executar o projeto, certifique-se de possuir:
-
-- Java 21
-- Docker
-- Docker Compose
-- Maven
-- Node.js
-- pnpm
-
-> 💡 Recomenda-se o uso de WSL com Docker integrado para ambientes Windows.
-
-#### 🐳 1. Subir o Docker
+#### 1. Subir o Docker
 
 Na raiz do projeto, execute:
 
@@ -122,19 +113,6 @@ Os testes funcionais utilizam Jest + Supertest e são executados de maneira inde
 Acesse a pasta de testes:
 ````
 cd __functionalTest
-````
-
-Instale as dependencias:
-````
 pnpm install
-````
-Depois execute os testes:
-````
 pnpm test
 ````
-#### Frontend
-Este repositorio contem somente o backend
-
-Acesse o Frontend em [Repostiorio do Frontend](https://github.com/LeonardoEnnes/fitstream-app)
-
-
